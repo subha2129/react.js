@@ -1,18 +1,28 @@
-import {useState} from 'react';
+import React, {useEffect, useState} from 'react'
 
 function App() {
-  const [color,setColor]=useState("white");
+  const[user,setUser]=useState([])
+  useEffect(()=>{
+    fetch("https://jsonplaceholder.typicode.com/users")
+    .then((response)=>response.json())
+    .then((data)=>setUser(data))
+
+  },[])
   return (
-    <div className="container"> 
-    <h1>Picker</h1>
-    <div className="btn-group">
-      <button className="btn1" onClick={()=>setColor("red")}> Red</button>
-      <button className="btn2" onClick={()=>setColor("blue")}> Blue</button>
-      <button className="btn3" onClick={()=>setColor("green")}> Green</button>
+    <div className='container'>
+      <h1 className='title'>UserDetails</h1>
+      <div className='user-list'>
+        {user.map((Details)=>(
+            <div key={user.id}> 
+            <p>name:{Details.name}</p>
+            <p>user email:{Details.email}</p>
+            
+            </div>
+
+        ))}
+      </div>
     </div>
-    <div className="color-box" style={{backgroundColor: color}}></div>
-    </div>
-  );
+  )
 }
 
-export default App;
+export default App
